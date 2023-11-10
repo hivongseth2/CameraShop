@@ -21,6 +21,7 @@ public abstract class Person {
     private String email;
     private String street;
     private String city;
+    private int status;
 
     @OneToOne
     @JoinColumn(name="account_id")
