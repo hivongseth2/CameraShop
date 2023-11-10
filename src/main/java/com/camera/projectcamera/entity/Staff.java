@@ -5,23 +5,12 @@ import lombok.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
+@NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Staff {
-
+public class Staff extends Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long staffId;
-    private String firstName;
-    private String lastName;
-    private String phone;
-    private String email;
-    private String street;
-    private String city;
-
-    @OneToOne
-    @JoinColumn(name="account_id")
-    private Accounts account;
 }
