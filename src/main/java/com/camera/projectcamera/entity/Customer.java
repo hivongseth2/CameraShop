@@ -9,7 +9,6 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-
 @Table(name = "customer_table")
 public class Customer extends Person {
 
