@@ -24,10 +24,7 @@ public class Order {
 
 
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "customer_personId", referencedColumnName = "personId"),
-            @JoinColumn(name = "customer_customerId", referencedColumnName = "customerId")
-    })
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @OneToMany(mappedBy="order")

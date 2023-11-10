@@ -21,11 +21,9 @@ public class Cart {
     private Date lastUpdate;
 
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "customer_personId", referencedColumnName = "personId"),
-            @JoinColumn(name = "customer_customerId", referencedColumnName = "customerId")
-    })
+    @JoinColumn(name = "customer_id")
     private Customer customer;
+
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> cartItems;
