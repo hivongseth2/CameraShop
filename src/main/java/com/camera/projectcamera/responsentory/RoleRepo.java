@@ -11,9 +11,9 @@ import java.util.List;
 @Repository
     public interface RoleRepo extends JpaRepository<Role,Long>
     {
-        Role findRoleByRoleName(String roleName);
-
-        @Query(nativeQuery = true, value = "")
-        List<Role> findAllRole();
+//        Role findRoleByRoleName(String roleName);
+//
+//        @Query(nativeQuery = true, value = "")
+//        List<Role> findAllRole();
     }
 
