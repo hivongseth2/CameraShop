@@ -6,11 +6,8 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @ToString
+@Table(name = "staff_table")
 public class Staff extends Person {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long staffId;
+
 }

@@ -1,5 +1,6 @@
 package com.camera.projectcamera.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,12 +25,13 @@ public class Products {
     private double price;
 
     @ManyToOne
-    @JoinColumn(name="category_id")
+    @JoinColumn(name = "category_id")
+    @JsonBackReference
     private Categories category;
-
 
     @ManyToOne
     @JoinColumn(name = "brand_id")
+    @JsonBackReference
     private Brands brand;
 
     @OneToMany(mappedBy = "product")
@@ -37,9 +39,4 @@ public class Products {
 
     @OneToMany(mappedBy = "product")
     private List<Images> images;
-
-
-    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    @JoinColumn(name="orderDetailId")
-    private OrderDetail orderDetail;
 }
