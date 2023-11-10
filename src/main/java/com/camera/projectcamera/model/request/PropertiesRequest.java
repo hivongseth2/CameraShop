@@ -4,8 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data @AllArgsConstructor @NoArgsConstructor
-public class RoleRequest {
-    private String roleName;
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class PropertiesRequest {
+    Long propertyId;
+    String name;
+    String value;
 }

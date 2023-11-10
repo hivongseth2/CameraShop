@@ -22,7 +22,6 @@ public class CategoriesServiceImpl implements CategoriesService {
     public void addCategories(Categories categories) {
         categoriesRepository.save(categories);
     }
-
     @Override
     public List<Categories> getCategories() {
         return categoriesRepository.findAll();
@@ -41,10 +40,8 @@ public class CategoriesServiceImpl implements CategoriesService {
         categoriesRepository
                 .findById(id)
                 .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Không thể thực hiện thao tác cập nhật với mặt hàng có id" + id));
-
         categories.setCategoryId(id);
         categoriesRepository.save(categories);
-
     }
 
     @Override
