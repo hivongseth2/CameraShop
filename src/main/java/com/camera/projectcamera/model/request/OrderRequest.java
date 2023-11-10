@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Data
@@ -18,6 +19,6 @@ public class OrderRequest {
     private Long orderId;
     private Date shipDate;
     private String address;
-    private List<OrderDetail> Orders;
+    private HashMap<Long , Integer> OrderDetails;
 
 }
