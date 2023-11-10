@@ -18,4 +18,5 @@ public class Images {
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinColumn(name="product_id")
-    private Products product;}
+    private Products product;
+}

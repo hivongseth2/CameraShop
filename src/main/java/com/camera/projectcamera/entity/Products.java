@@ -20,6 +20,7 @@ public class Products {
     private String name;
     private String modelYear;
     private Date yearOfManual;
+    private int status;
     private double price;
 
     @ManyToOne
@@ -41,8 +42,4 @@ public class Products {
     @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinColumn(name="orderDetailId")
     private OrderDetail orderDetail;
-
-
-
-
 }
