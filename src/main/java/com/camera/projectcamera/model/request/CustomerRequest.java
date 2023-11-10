@@ -15,5 +15,4 @@ public class CustomerRequest {
     String userName;
     String passWord;
     Long roleId;
-
 }

@@ -1,12 +1,15 @@
 package com.camera.projectcamera.controllers;
 
 import com.camera.projectcamera.entity.Products;
+import com.camera.projectcamera.model.request.ProductRequest;
+import com.camera.projectcamera.repository.ProductRepository;
 import com.camera.projectcamera.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/product")
@@ -14,17 +17,27 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private ProductRepository productRepository;
     @PostMapping("/add")
-    private String addProduct(@RequestBody Products products){
-        productService.addProduct(products);
-        return "success add product";
+    public ResponseEntity<?> addProduct(@RequestBody Products products){
+        Products theProduct = productService.addProduct(products);
+
+        return ResponseEntity.ok(theProduct);
     }
+//@PostMapping("/add")
+//public void addProduct(@RequestBody Products products){
+//    Products theProduct = productService.addProduct(products);
+//
+////    return ResponseEntity.ok (theProduct);
+//
+//}
     @GetMapping
-    public List<Products> getProducts(){
+    public List<ProductRequest> getProducts(){
         return productService.getProducts();
     }
     @GetMapping("/get")
-    public Products getProduct(@RequestParam Long productId){
+    public ProductRequest getProduct(@RequestParam Long productId){
         return productService.getProduct(productId);
     }
     @PutMapping("update/{productId}")
@@ -37,7 +50,16 @@ public class ProductController {
             @PathVariable Long productId,
             @PathVariable int status
     ) {
-        productService.updateProductStatus(productId, status);
-        return ResponseEntity.noContent().build();
+        Optional<Products> optionalProduct = productRepository.findById(productId);
+
+        if (optionalProduct.isPresent()) {
+            Products product = optionalProduct.get();
+            product.setStatus(status);
+            productRepository.save(product);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
+
 }

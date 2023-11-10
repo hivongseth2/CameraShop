@@ -3,6 +3,7 @@ package com.camera.projectcamera.service.impl;
 import com.camera.projectcamera.entity.Brands;
 import com.camera.projectcamera.repository.BrandRepository;
 import com.camera.projectcamera.service.BrandService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -11,10 +12,11 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class BrandServiceImpl implements BrandService {
 
-    @Autowired
-    private BrandRepository brandRepository;
+
+    private final BrandRepository brandRepository;
     @Override
     public void addBrand(Brands brands) {
 

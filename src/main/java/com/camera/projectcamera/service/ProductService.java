@@ -1,15 +1,17 @@
 package com.camera.projectcamera.service;
 
 import com.camera.projectcamera.entity.Products;
+import com.camera.projectcamera.model.request.ProductRequest;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public interface ProductService {
-    void addProduct(Products products);
+    Products addProduct(Products products);
 
-    List<Products> getProducts();
+    List<ProductRequest> getProducts();
 
-    Products getProduct(Long productId);
+    ProductRequest getProduct(Long productId);
 
     void updateProudct(Long productId, Products products);
 

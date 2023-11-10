@@ -1,6 +1,7 @@
 package com.camera.projectcamera.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,12 +27,10 @@ public class Products {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    @JsonBackReference
     private Categories category;
 
     @ManyToOne
     @JoinColumn(name = "brand_id")
-    @JsonBackReference
     private Brands brand;
 
     @OneToMany(mappedBy = "product")
