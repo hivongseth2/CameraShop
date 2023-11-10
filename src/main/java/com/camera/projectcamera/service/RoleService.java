@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service;
 public interface RoleService {
     Role create(String name);
 
-    void update(Long id, String name);
+//    void update(Long id, String name);
 }

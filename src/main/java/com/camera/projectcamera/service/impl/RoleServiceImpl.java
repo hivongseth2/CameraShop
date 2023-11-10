@@ -21,13 +21,13 @@ public class RoleServiceImpl implements RoleService {
 
         return roleRepository.save(role);
     }
-
-    @Override
-    public void update(Long id, String name) {
-        Optional<Role> roleOptional = roleRepository.findById(id);
-
-        if(roleOptional.isEmpty()){
-//            throw new Bad
-        }
-    }
+//
+//    @Override
+//    public void update(Long id, String name) {
+//        Optional<Role> roleOptional = roleRepository.findById(id);
+//
+//        if(roleOptional.isEmpty()){
+////            throw new Bad
+//        }
+//    }
 }
