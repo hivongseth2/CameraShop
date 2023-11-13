@@ -48,9 +48,6 @@ public class OrderServiceImpl implements OrderService {
             order.setAddress(orderRequest.getAddress());
             System.out.println(customer);
             Order theOrder =  orderRepository.save(order);
-
-
-//             create detail
             HashMap<Long, Integer> listOrderDetail = orderRequest.getOrderDetails();
 
             listOrderDetail.forEach((k,v)->
@@ -60,20 +57,15 @@ public class OrderServiceImpl implements OrderService {
                 {
                     Products product = productOption.get();
                     double price = product.getPrice()*v;
-
                     OrderDetail orderDetail = new OrderDetail();
                     orderDetail.setPrice(price);
                     orderDetail.setOrder(theOrder);
                     orderDetail.setProduct(product);
                     orderDetail.setQuantity(v);
                     orderDetailRepository.save(orderDetail);
-
-
                 }
             });
             return theOrder;
-
-
         }
         catch(Exception e) {
             e.printStackTrace();
