@@ -37,4 +37,18 @@ public class CustomerController {
         return customerService.getCustomerById(CustomerId);
     }
 
+
+
+    @PutMapping("/update/{customerId}")
+    public ResponseEntity<?> updateCustomer(@PathVariable Long customerId,@RequestBody Customer customer) {
+        Customer theCustomer = customerService.updateCustomer(customerId,customer);
+
+        if(customer==null){
+            return ResponseEntity.badRequest().body(new MessageError(400, "Create role error"));
+        }
+
+        return ResponseEntity.ok(theCustomer);
+
+
+    }
 }
