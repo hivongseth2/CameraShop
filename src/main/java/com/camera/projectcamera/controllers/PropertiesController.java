@@ -1,6 +1,7 @@
 package com.camera.projectcamera.controllers;
 
 import com.camera.projectcamera.entity.Properties;
+import com.camera.projectcamera.model.MessageError;
 import com.camera.projectcamera.service.PropertiesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,13 @@ public class PropertiesController {
     private PropertiesService propertiesService;
 
     @PostMapping("/add")
-    public String addProperties(@RequestBody Properties properties){
+    public ResponseEntity<?> addProperties(@RequestBody Properties properties){
         propertiesService.addProperties(properties);
+        if(properties==null){
+            ResponseEntity.badRequest().body(new MessageError(400, "create error"));
+        }
 
-        return "add properties success";
+        return ResponseEntity.ok(properties);
     }
     @PutMapping("update/{propertyId}")
     public ResponseEntity<Void> updateProperties(@PathVariable Long propertyId, @RequestBody Properties properties){
