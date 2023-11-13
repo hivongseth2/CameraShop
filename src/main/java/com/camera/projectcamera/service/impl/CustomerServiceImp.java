@@ -49,7 +49,6 @@ public class CustomerServiceImp implements CustomerService {
             }
             finally
             {
-
                 Customer customer = new Customer();
                 customer.setFirstName(customerRequest.getFirstName());
                 customer.setLastName(customerRequest.getLastName());
@@ -62,19 +61,13 @@ public class CustomerServiceImp implements CustomerService {
                 return customerRepo.save(customer);
             }
 
-
-
-//
-
         }
        catch(Exception e)
        {
            e.printStackTrace();
            return null;
        }
-
     }
-
     @Override
     public Customer getCustomerById(Long customerId) {
        Customer customer = customerRepo

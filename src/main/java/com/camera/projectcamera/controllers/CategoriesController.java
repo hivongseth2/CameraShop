@@ -2,6 +2,7 @@ package com.camera.projectcamera.controllers;
 
 import com.camera.projectcamera.dto.CategoriesDTO;
 import com.camera.projectcamera.entity.Categories;
+import com.camera.projectcamera.model.MessageError;
 import com.camera.projectcamera.service.CategoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,12 @@ public class CategoriesController {
     private CategoriesService categoriesService;
 
     @PostMapping("/add")
-    public String addCategories(@RequestBody Categories categories){
+    public ResponseEntity<?> addCategories(@RequestBody Categories categories){
         categoriesService.addCategories(categories);
-        return  "success add categories";
+        if (categories==null){
+            return ResponseEntity.badRequest().body(new MessageError(400, "create error"));
+        }
+        return  ResponseEntity.ok(categories);
     }
 
     @GetMapping

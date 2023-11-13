@@ -39,6 +39,7 @@ public class CustomerController {
 
 
 
+
     @PutMapping("/update/{customerId}")
     public ResponseEntity<?> updateCustomer(@PathVariable Long customerId,@RequestBody Customer customer) {
         Customer theCustomer = customerService.updateCustomer(customerId,customer);
@@ -51,4 +52,5 @@ public class CustomerController {
 
 
     }
+
 }

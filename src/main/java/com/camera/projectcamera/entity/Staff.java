@@ -6,7 +6,6 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-
 @ToString
 public class Staff extends Person {
 
