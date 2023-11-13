@@ -2,6 +2,7 @@ package com.camera.projectcamera.controllers;
 
 import com.camera.projectcamera.dto.AccountDTO;
 import com.camera.projectcamera.entity.Accounts;
+import com.camera.projectcamera.model.MessageError;
 import com.camera.projectcamera.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,12 @@ public class AccountController {
 
 
     @PostMapping("/add")
-    public String addAccount(@RequestBody Accounts account){
+    public ResponseEntity<?> addAccount(@RequestBody Accounts account){
         accountService.addAccount(account);
-        return "add account success";
+        if(account==null){
+            return ResponseEntity.badRequest().body(new MessageError(400, "Create role error"));
+        }
+       return ResponseEntity.ok(account);
     }
 
     @PatchMapping("update-password/{accountId}")

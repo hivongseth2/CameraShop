@@ -1,6 +1,7 @@
 package com.camera.projectcamera.controllers;
 
 import com.camera.projectcamera.entity.Brands;
+import com.camera.projectcamera.model.MessageError;
 import com.camera.projectcamera.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +16,12 @@ public class BrandController {
     private BrandService brandService;
 
     @PostMapping("/add")
-    public String addBrand(@RequestBody Brands brands){
+    public ResponseEntity<?> addBrand(@RequestBody Brands brands){
         brandService.addBrand(brands);
-        return "succcess add brand";
+        if(brands==null){
+            return ResponseEntity.badRequest().body(new MessageError(400, "Create error"));
+        }
+        return ResponseEntity.ok(brands);
     }
 
     @GetMapping

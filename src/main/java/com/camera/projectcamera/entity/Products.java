@@ -24,6 +24,7 @@ public class Products {
     private Date yearOfManual;
     private int status;
     private double price;
+    private int quantity;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

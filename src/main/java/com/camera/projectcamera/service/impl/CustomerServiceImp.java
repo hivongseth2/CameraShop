@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 
@@ -72,5 +74,26 @@ public class CustomerServiceImp implements CustomerService {
                 .findById(customerId)
                 .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Khong tim thay Khach hang"));
         return customer;
+    }
+
+    @Override
+    public Customer updateCustomer(Long customerId, Customer customer) {
+        Optional<Customer> optionalCustomer = customerRepo.findById(customerId);
+
+
+        if (optionalCustomer.isPresent()) {
+            Customer customerBefore = optionalCustomer.get();
+
+            customer.setAccount(customerBefore.getAccount());
+            customer.setPersonId(customerBefore.getPersonId());
+
+
+            return customerRepo.save(customer);
+        } else {
+            // Role with the given ID not found
+            return null;
+        }
+
+
     }
 }
