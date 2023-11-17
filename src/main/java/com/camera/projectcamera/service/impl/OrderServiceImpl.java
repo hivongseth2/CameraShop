@@ -49,6 +49,7 @@ public class OrderServiceImpl implements OrderService {
             System.out.println(customer);
             Order theOrder =  orderRepository.save(order);
 
+
 //             create detail
             HashMap<Long, Integer> listOrderDetail = orderRequest.getOrderDetails();
 
@@ -65,21 +66,14 @@ public class OrderServiceImpl implements OrderService {
                     orderDetail.setOrder(theOrder);
                     orderDetail.setProduct(product);
                     orderDetail.setQuantity(v);
-                    int newQuantity = product.getQuantity()- v;
-                    if(newQuantity>=0)
-                    {
-                        product.setQuantity(newQuantity);
-
-                    }
-                    else
-                    {
-                        throw new IllegalArgumentException("Quantity cannot be negative");
-                    }
                     orderDetailRepository.save(orderDetail);
+
 
                 }
             });
             return theOrder;
+
+
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -99,8 +93,6 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Mặt hàng không được tìm thấy với id" + orderId));
         return order;
     }
-
-
 
 
 
