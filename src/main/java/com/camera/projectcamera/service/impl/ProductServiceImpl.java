@@ -37,6 +37,8 @@ public class ProductServiceImpl implements ProductService {
         products.setBrand(brand);
         products.setCategory(cate);
         return productRepository.save(products);
+
+
     }
 
     @Override

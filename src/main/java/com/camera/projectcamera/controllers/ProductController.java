@@ -1,6 +1,7 @@
 package com.camera.projectcamera.controllers;
 
 import com.camera.projectcamera.entity.Products;
+import com.camera.projectcamera.model.MessageError;
 import com.camera.projectcamera.model.request.ProductRequest;
 import com.camera.projectcamera.repository.ProductRepository;
 import com.camera.projectcamera.service.ProductService;
@@ -22,7 +23,9 @@ public class ProductController {
     @PostMapping("/add")
     public ResponseEntity<?> addProduct(@RequestBody Products products){
         Products theProduct = productService.addProduct(products);
-
+        if(theProduct==null){
+            return ResponseEntity.badRequest().body(new MessageError(400, "Create error"));
+        }
         return ResponseEntity.ok(theProduct);
     }
 //@PostMapping("/add")
