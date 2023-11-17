@@ -19,6 +19,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void addAccount(Accounts account) {
+        if(account.getUserName()==null || account.getPassword()==null) {
+            throw new RuntimeException("Username and password is required!");
+        }
         accountRepository.save(account);
     }
 

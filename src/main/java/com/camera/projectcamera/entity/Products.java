@@ -28,10 +28,13 @@ public class Products {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
+    @JsonIgnore
     private Categories category;
 
     @ManyToOne
     @JoinColumn(name = "brand_id")
+    @JsonIgnore
+
     private Brands brand;
 
     @OneToMany(mappedBy = "product")

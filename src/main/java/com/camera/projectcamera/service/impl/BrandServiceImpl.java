@@ -15,10 +15,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BrandServiceImpl implements BrandService {
 
-
     private final BrandRepository brandRepository;
+
     @Override
     public void addBrand(Brands brands) {
+        if(brands.getImage()==null) {
+            throw new RuntimeException("please input full info!");
+        }
 
         brandRepository.save(brands);
     }
