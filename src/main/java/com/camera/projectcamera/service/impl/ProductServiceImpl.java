@@ -153,9 +153,12 @@ public class ProductServiceImpl implements ProductService {
         productRequest.setCategoryName(product.getCategory().getName());
         productRequest.setBrandName(product.getBrand().getName());
         productRequest.setQuantity(product.getQuantity());
-        List<PropertiesRequest> propertiesRequests = convertToPropertiesRequestList(product.getProperties());
 
+        List<PropertiesRequest> propertiesRequests = convertToPropertiesRequestList(product.getProperties());
+        List<ImageProductRequest> imageProductRequests = convertToImageProductRequestList(product.getImages());
         productRequest.setProperties(propertiesRequests);
+        productRequest.setImages(imageProductRequests);
+
 
         return productRequest;
     }
@@ -166,8 +169,21 @@ public class ProductServiceImpl implements ProductService {
             PropertiesRequest propertiesRequest = new PropertiesRequest();
             propertiesRequest.setPropertyId(property.getPropertyId());
             propertiesRequest.setName(property.getName());
+            propertiesRequest.setValue(property.getValue());
             propertiesRequests.add(propertiesRequest);
         }
         return propertiesRequests;
+    }
+
+    private List<ImageProductRequest> convertToImageProductRequestList(List<Images> imageProducts) {
+        List<ImageProductRequest> imageProductRequests = new ArrayList<>();
+
+        for (Images imageProduct : imageProducts) {
+            ImageProductRequest imageProductRequest = new ImageProductRequest();
+            imageProductRequest.setImageId(imageProduct.getImageId());
+            imageProductRequest.setId(imageProduct.getId());
+            imageProductRequests.add(imageProductRequest);
+        }
+        return imageProductRequests;
     }
 }
