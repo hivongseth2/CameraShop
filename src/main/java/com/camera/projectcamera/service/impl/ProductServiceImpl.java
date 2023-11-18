@@ -164,4 +164,5 @@ public class ProductServiceImpl implements ProductService {
         }
         return propertiesRequests;
     }
+
 }
