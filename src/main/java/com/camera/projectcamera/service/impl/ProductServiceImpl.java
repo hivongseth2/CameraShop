@@ -73,10 +73,12 @@ public class ProductServiceImpl implements ProductService {
             productDTO.setStatus(product.getStatus());
             productDTO.setPrice(product.getPrice());
             if (product.getCategory() != null) {
+                productDTO.setCategoryId(product.getCategory().getCategoryId());
                 productDTO.setCategoryName(product.getCategory().getName());
             }
 
             if (product.getBrand() != null) {
+                productDTO.setBrandId(product.getBrand().getBrandId());
                 productDTO.setBrandName(product.getBrand().getName());
             }
             List<ImageProductRequest> imageRequests = new ArrayList<>();

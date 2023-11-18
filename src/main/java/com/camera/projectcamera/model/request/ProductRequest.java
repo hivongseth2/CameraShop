@@ -17,7 +17,9 @@ public class ProductRequest {
     private Date yearOfManual;
     private int status;
     private double price;
+    private Long categoryId;
     private String categoryName;
+    private Long brandId;
     private String brandName;
     private int quantity;
     private List<ImageProductRequest> images;
