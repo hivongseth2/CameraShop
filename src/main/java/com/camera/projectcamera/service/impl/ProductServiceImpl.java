@@ -146,6 +146,7 @@ public class ProductServiceImpl implements ProductService {
         ProductRequest productRequest = new ProductRequest();
         productRequest.setProductId(product.getProductId());
         productRequest.setName(product.getName());
+        productRequest.setModelYear(product.getModelYear());
 
         List<PropertiesRequest> propertiesRequests = convertToPropertiesRequestList(product.getProperties());
 
