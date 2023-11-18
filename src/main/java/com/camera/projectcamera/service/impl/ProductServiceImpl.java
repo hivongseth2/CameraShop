@@ -21,14 +21,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
-
-
     private final ProductRepository productRepository;
-
-
     private final BrandService brandService;
-
-
     private final CategoriesService categoriesService;
     @Override
     public Products addProduct(Products products) {
@@ -38,24 +32,6 @@ public class ProductServiceImpl implements ProductService {
         products.setCategory(cate);
         return productRepository.save(products);
     }
-//    @Override
-//    public Products addProduct(Products products) {
-//        Brands brand = null;
-//        Categories cate = null;
-//
-//        if (products.getBrand() != null) {
-//            brand = brandService.getBrand(products.getBrand().getBrandId());
-//        }
-//
-//        if (products.getCategory() != null) {
-//            cate = categoriesService.getCategory(products.getCategory().getCategoryId());
-//        }
-//
-//        products.setBrand(brand);
-//        products.setCategory(cate);
-//
-//        return productRepository.save(products);
-//    }
 
     @Override
     public List<ProductRequest> getProducts() {

@@ -20,15 +20,17 @@ public class ProductController {
 
     @Autowired
     private ProductRepository productRepository;
+
     @PostMapping("/add")
-    public ResponseEntity<?> addProduct(@RequestBody Products products){
+    public ResponseEntity<?> addProduct(@RequestBody Products products) {
         Products theProduct = productService.addProduct(products);
-        if(theProduct==null){
+        if (theProduct == null) {
             return ResponseEntity.badRequest().body(new MessageError(400, "Create error"));
         }
         return ResponseEntity.ok(theProduct);
     }
-//@PostMapping("/add")
+
+    //@PostMapping("/add")
 //public void addProduct(@RequestBody Products products){
 //    Products theProduct = productService.addProduct(products);
 //
@@ -36,18 +38,22 @@ public class ProductController {
 //
 //}
     @GetMapping
-    public List<ProductRequest> getProducts(){
+    public List<ProductRequest> getProducts() {
         return productService.getProducts();
     }
+
     @GetMapping("/get")
-    public ProductRequest getProduct(@RequestParam Long productId){
+    public ProductRequest getProduct(@RequestParam Long productId) {
+
         return productService.getProduct(productId);
     }
+
     @PutMapping("update/{productId}")
-    public ResponseEntity<Void> updateProduct(@PathVariable Long productId,@RequestBody Products products){
+    public ResponseEntity<Void> updateProduct(@PathVariable Long productId, @RequestBody Products products) {
         productService.updateProudct(productId, products);
         return ResponseEntity.noContent().build();
     }
+
     @PutMapping("updateStatus/{productId}/{status}")
     public ResponseEntity<Void> updateProductStatus(
             @PathVariable Long productId,
