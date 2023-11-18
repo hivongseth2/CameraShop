@@ -79,12 +79,6 @@ public class CartServiceImpl implements CartService {
 
             Long cartIdTemp = cartRepository.findCartIdByCustomerId(cartRequest.getCustomerId());
 
-
-//            if(cartIdTemp==null)
-//            {
-//
-//            }
-
             Optional<Cart> existingCartOptional = cartRepository.findById(cartIdTemp);
             if (existingCartOptional.isPresent()) {
                 Cart existingCart = existingCartOptional.get();
@@ -152,7 +146,7 @@ public class CartServiceImpl implements CartService {
     public Cart addOrUpdateCart(CartRequest cartRequest) {
         try {
             // Retrieve the existing cart based on the given cartId
-            Optional<Cart> existingCartOptional = cartRepository.findById(cartRequest.getCartId());
+            Optional<Cart> existingCartOptional = cartRepository.findById(cartRequest.getCustomerId());
             Cart cart;
 
             if (existingCartOptional.isPresent()) {
