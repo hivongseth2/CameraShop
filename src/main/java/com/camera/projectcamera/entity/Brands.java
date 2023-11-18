@@ -1,5 +1,6 @@
 package com.camera.projectcamera.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,8 @@ public class Brands {
     private String name;
     private String image;
 
+
+    @JsonIgnore
     @OneToMany(mappedBy = "brand")
     private List<Products> products;
 

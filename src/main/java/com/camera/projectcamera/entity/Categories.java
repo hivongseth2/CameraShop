@@ -1,5 +1,6 @@
 package com.camera.projectcamera.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +22,7 @@ public class Categories {
 //    @OneToMany(mappedBy = "role")
 //    private List<accounts> listAccount;
 
+    @JsonIgnore
     @OneToMany(mappedBy ="category")
     private List<Products> products;
 
