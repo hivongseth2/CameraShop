@@ -1,5 +1,6 @@
 package com.camera.projectcamera.controllers;
 
+import com.camera.projectcamera.entity.Brands;
 import com.camera.projectcamera.entity.Customer;
 import com.camera.projectcamera.entity.Role;
 import com.camera.projectcamera.model.MessageError;
@@ -12,14 +13,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 @RestController
-    @RequestMapping("/customer")
+@RequestMapping("/customer")
 @RequiredArgsConstructor
 public class CustomerController {
 
     @Autowired
     private final CustomerService customerService;
-
+    @GetMapping
+    public List<Customer> getAllCustomer(){
+        return customerService.getAllCustomer();
+    }
     @PostMapping("/add")
     public ResponseEntity<?> create(@RequestBody CustomerRequest requestCustomer) {
         Customer theCustomer =customerService.createCustomer(requestCustomer);
@@ -35,8 +41,6 @@ public class CustomerController {
     public Customer getCustomer(@RequestParam Long personId) {
         return customerService.getCustomerById(personId);
     }
-
-
     @PutMapping("/update/{customerId}")
     public ResponseEntity<?> updateCustomer(@PathVariable Long customerId,@RequestBody Customer customer) {
         Customer theCustomer = customerService.updateCustomer(customerId,customer);
@@ -45,8 +49,6 @@ public class CustomerController {
             return ResponseEntity.badRequest().body(new MessageError(400, "Create role error"));
         }
         return ResponseEntity.ok(theCustomer);
-
-
     }
 
 }
