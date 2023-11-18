@@ -100,6 +100,7 @@ public class CustomerServiceImp implements CustomerService {
         Customer customer = customerRepo.findByUserName(userName);
         if (customer != null) {
             return new CustomerRequest(
+                    customer.getPersonId(),
                     customer.getFirstName(),
                     customer.getLastName(),
                     customer.getPhone(),
@@ -115,4 +116,5 @@ public class CustomerServiceImp implements CustomerService {
             return null;
         }
     }
+
 }

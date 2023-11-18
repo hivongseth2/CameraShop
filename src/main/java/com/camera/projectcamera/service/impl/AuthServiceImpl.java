@@ -30,6 +30,7 @@ public class AuthServiceImpl implements AuthService {
         Customer customer = customerRepository.findByUserName(userName);
         if (customer != null) {
             return new CustomerRequest(
+                    customer.getPersonId(),
                     customer.getFirstName(),
                     customer.getLastName(),
                     customer.getPhone(),

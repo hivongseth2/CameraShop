@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 public class CustomerRequest {
+    private Long personId;
     String firstName;
     String lastName;
     String phone;
