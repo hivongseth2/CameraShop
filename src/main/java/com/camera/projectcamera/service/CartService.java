@@ -7,4 +7,6 @@ public interface CartService {
     Cart addCart(CartRequest cartRequest);
 
     Cart getCartById(Long cartId);
+
+    Cart updateCart(CartRequest cartRequest);
 }
