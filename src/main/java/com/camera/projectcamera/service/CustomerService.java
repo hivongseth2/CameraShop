@@ -11,5 +11,5 @@ public interface CustomerService {
     Customer getCustomerById(Long customerId);
     Customer updateCustomer (Long customerId, Customer customer);
 
-
+    CustomerRequest getUserInfo(String userName);
 }

@@ -2,6 +2,7 @@ package com.camera.projectcamera.service.impl;
 
 
 import com.camera.projectcamera.entity.Properties;
+import com.camera.projectcamera.model.request.PropertiesRequest;
 import com.camera.projectcamera.repository.PropertiesRepository;
 import com.camera.projectcamera.service.PropertiesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -50,8 +52,6 @@ public class PropertiesServiceImpl implements PropertiesService {
     public List<Properties> getProperties() {
         return propertiesRepository.findAll();
     }
-
-
 
 
 }

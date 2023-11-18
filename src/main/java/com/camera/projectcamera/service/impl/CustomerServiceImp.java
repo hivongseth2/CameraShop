@@ -29,14 +29,12 @@ public class CustomerServiceImp implements CustomerService {
 
     @Override
     public Customer createCustomer(CustomerRequest customerRequest) {
-
         Accounts account = new Accounts();
         try
         {
             try
             {
                 Role role = roleService.getRoleById(customerRequest.getRoleId());
-
                 account.setUserName(customerRequest.getUserName());
                 account.setPassword(customerRequest.getPassWord());
                 account.setRole(role);
@@ -95,5 +93,26 @@ public class CustomerServiceImp implements CustomerService {
         }
 
 
+    }
+
+    @Override
+    public CustomerRequest getUserInfo(String userName) {
+        Customer customer = customerRepo.findByUserName(userName);
+        if (customer != null) {
+            return new CustomerRequest(
+                    customer.getFirstName(),
+                    customer.getLastName(),
+                    customer.getPhone(),
+                    customer.getEmail(),
+                    customer.getStreet(),
+                    customer.getCity(),
+                    String.valueOf(customer.getStatus()),
+                    customer.getAccount().getUserName(),
+                    customer.getAccount().getPassword(),
+                    customer.getAccount().getRole().getRoleId()
+            );
+        } else {
+            return null;
+        }
     }
 }

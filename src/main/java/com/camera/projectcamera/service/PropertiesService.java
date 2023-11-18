@@ -1,6 +1,7 @@
 package com.camera.projectcamera.service;
 
 import com.camera.projectcamera.entity.Properties;
+import com.camera.projectcamera.model.request.PropertiesRequest;
 
 import java.util.List;
 
@@ -14,4 +15,5 @@ public interface PropertiesService {
     Properties getProperty(Long propertiesId);
 
     List<Properties> getProperties();
+
 }

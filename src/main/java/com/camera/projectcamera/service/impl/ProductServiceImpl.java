@@ -9,6 +9,7 @@ import com.camera.projectcamera.repository.ProductRepository;
 import com.camera.projectcamera.service.BrandService;
 import com.camera.projectcamera.service.CategoriesService;
 import com.camera.projectcamera.service.ProductService;
+import com.camera.projectcamera.service.PropertiesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -85,8 +86,7 @@ public class ProductServiceImpl implements ProductService {
                 .findById(productId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không thể tìm thấy sản phẩm có ID: " + productId));
 
-        // Chuyển đổi từ Products sang ProductDTO
-        return convertToProductDTO(product);
+        return convertToProductRequest(product);
     }
 
     private ProductRequest convertToProductDTO(Products product) {
@@ -142,4 +142,32 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(product);
     }
 
+    public ProductRequest convertToProductRequest(Products product) {
+        ProductRequest productRequest = new ProductRequest();
+        productRequest.setProductId(product.getProductId());
+        productRequest.setName(product.getName());
+        productRequest.setModelYear(product.getModelYear());
+        productRequest.setYearOfManual(product.getYearOfManual());
+        productRequest.setStatus(product.getStatus());
+        productRequest.setPrice(product.getPrice());
+        productRequest.setCategoryName(product.getCategory().getName());
+        productRequest.setBrandName(product.getBrand().getName());
+        productRequest.setQuantity(product.getQuantity());
+        List<PropertiesRequest> propertiesRequests = convertToPropertiesRequestList(product.getProperties());
+
+        productRequest.setProperties(propertiesRequests);
+
+        return productRequest;
+    }
+    private List<PropertiesRequest> convertToPropertiesRequestList(List<Properties> properties) {
+        List<PropertiesRequest> propertiesRequests = new ArrayList<>();
+
+        for (Properties property : properties) {
+            PropertiesRequest propertiesRequest = new PropertiesRequest();
+            propertiesRequest.setPropertyId(property.getPropertyId());
+            propertiesRequest.setName(property.getName());
+            propertiesRequests.add(propertiesRequest);
+        }
+        return propertiesRequests;
+    }
 }
