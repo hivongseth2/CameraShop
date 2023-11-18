@@ -32,12 +32,9 @@ public class CustomerController {
     }
 
     @GetMapping("/getById")
-    public Customer getCustomer(@RequestParam Long CustomerId)
-    {
-        return customerService.getCustomerById(CustomerId);
+    public Customer getCustomer(@RequestParam Long personId) {
+        return customerService.getCustomerById(personId);
     }
-
-
 
 
     @PutMapping("/update/{customerId}")
@@ -47,7 +44,6 @@ public class CustomerController {
         if(customer==null){
             return ResponseEntity.badRequest().body(new MessageError(400, "Create role error"));
         }
-
         return ResponseEntity.ok(theCustomer);
 
 

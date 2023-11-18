@@ -41,10 +41,10 @@ public class ProductController {
     }
     @GetMapping("/get")
     public ProductRequest getProduct(@RequestParam Long productId){
+
         return productService.getProduct(productId);
     }
-    @PutMapping("update/{productId}")
-    public ResponseEntity<Void> updateProduct(@PathVariable Long productId,@RequestBody Products products){
+    @PutMapping("update/{productId}")    public ResponseEntity<Void> updateProduct(@PathVariable Long productId,@RequestBody Products products){
         productService.updateProudct(productId, products);
         return ResponseEntity.noContent().build();
     }
