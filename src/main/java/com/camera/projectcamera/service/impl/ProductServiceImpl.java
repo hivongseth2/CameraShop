@@ -1,3 +1,4 @@
+
 package com.camera.projectcamera.service.impl;
 
 import com.camera.projectcamera.entity.*;
@@ -27,12 +28,36 @@ public class ProductServiceImpl implements ProductService {
     private final CategoriesService categoriesService;
     @Override
     public Products addProduct(Products products) {
+        if (products.getBrand() == null || products.getBrand().getBrandId() == null) {
+            // Handle the case where the brand is not set
+            throw new IllegalArgumentException("Brand must be set in the product.");
+        }
+
         Brands brand = brandService.getBrand(products.getBrand().getBrandId());
-        Categories cate = categoriesService.getCategory(products.getCategory().getCategoryId());
+
+        if (brand == null) {
+            // Handle the case where the brand is not found
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Brand not found with ID " + products.getBrand().getBrandId());
+        }
+
+        if (products.getCategory() == null || products.getCategory().getCategoryId() == null) {
+            // Handle the case where the category is not set
+            throw new IllegalArgumentException("Category must be set in the product.");
+        }
+
+        Categories category = categoriesService.getCategory(products.getCategory().getCategoryId());
+
+        if (category == null) {
+            // Handle the case where the category is not found
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found with ID " + products.getCategory().getCategoryId());
+        }
+
         products.setBrand(brand);
-        products.setCategory(cate);
+        products.setCategory(category);
+
         return productRepository.save(products);
     }
+
 
     @Override
     public List<ProductRequest> getProducts() {
@@ -58,6 +83,7 @@ public class ProductServiceImpl implements ProductService {
             for (Images image : product.getImages()) {
                 ImageProductRequest imageRequest = new ImageProductRequest();
                 imageRequest.setImageId(image.getImageId());
+                imageRequest.setId(image.getId());
                 imageRequests.add(imageRequest);
             }
             productDTO.setImages(imageRequests);
@@ -148,9 +174,18 @@ public class ProductServiceImpl implements ProductService {
         productRequest.setName(product.getName());
         productRequest.setModelYear(product.getModelYear());
 
-        List<PropertiesRequest> propertiesRequests = convertToPropertiesRequestList(product.getProperties());
+        productRequest.setYearOfManual(product.getYearOfManual());
+        productRequest.setStatus(product.getStatus());
+        productRequest.setPrice(product.getPrice());
+        productRequest.setCategoryName(product.getCategory().getName());
+        productRequest.setBrandName(product.getBrand().getName());
+        productRequest.setQuantity(product.getQuantity());
 
+        List<PropertiesRequest> propertiesRequests = convertToPropertiesRequestList(product.getProperties());
+        List<ImageProductRequest> imageProductRequests = convertToImageProductRequestList(product.getImages());
         productRequest.setProperties(propertiesRequests);
+        productRequest.setImages(imageProductRequests);
+
 
         return productRequest;
     }
@@ -161,8 +196,21 @@ public class ProductServiceImpl implements ProductService {
             PropertiesRequest propertiesRequest = new PropertiesRequest();
             propertiesRequest.setPropertyId(property.getPropertyId());
             propertiesRequest.setName(property.getName());
+            propertiesRequest.setValue(property.getValue());
             propertiesRequests.add(propertiesRequest);
         }
         return propertiesRequests;
+    }
+
+    private List<ImageProductRequest> convertToImageProductRequestList(List<Images> imageProducts) {
+        List<ImageProductRequest> imageProductRequests = new ArrayList<>();
+
+        for (Images imageProduct : imageProducts) {
+            ImageProductRequest imageProductRequest = new ImageProductRequest();
+            imageProductRequest.setImageId(imageProduct.getImageId());
+            imageProductRequest.setId(imageProduct.getId());
+            imageProductRequests.add(imageProductRequest);
+        }
+        return imageProductRequests;
     }
 }
