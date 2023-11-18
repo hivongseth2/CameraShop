@@ -12,7 +12,7 @@ import java.util.HashMap;
 @NoArgsConstructor
 public class CartRequest {
     private Long customerId;
-    private Long cartId;
+//    private Long cartId;
     private Date lastUpdate;
     private HashMap<Long, Integer> cartDetails;
 }
