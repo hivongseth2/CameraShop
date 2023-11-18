@@ -90,7 +90,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private ProductRequest convertToProductDTO(Products product) {
-        // Thực hiện chuyển đổi từ Products sang ProductDTO
         ProductRequest productDTO = new ProductRequest();
         productDTO.setProductId(product.getProductId());
         productDTO.setName(product.getName());
@@ -146,11 +145,11 @@ public class ProductServiceImpl implements ProductService {
         ProductRequest productRequest = new ProductRequest();
         productRequest.setProductId(product.getProductId());
         productRequest.setName(product.getName());
-
         List<PropertiesRequest> propertiesRequests = convertToPropertiesRequestList(product.getProperties());
+        List<ImageProductRequest> imageProductRequests = convertToImageProductRequestList(product.getImages());
 
+        productRequest.setImages(imageProductRequests);
         productRequest.setProperties(propertiesRequests);
-
         return productRequest;
     }
     private List<PropertiesRequest> convertToPropertiesRequestList(List<Properties> properties) {
@@ -163,5 +162,16 @@ public class ProductServiceImpl implements ProductService {
             propertiesRequests.add(propertiesRequest);
         }
         return propertiesRequests;
+    }
+    private List<ImageProductRequest> convertToImageProductRequestList(List<Images> imageProducts) {
+        List<ImageProductRequest> imageProductRequests = new ArrayList<>();
+
+        for (Images imageProduct : imageProducts) {
+            ImageProductRequest imageProductRequest = new ImageProductRequest();
+            imageProductRequest.setImageId(imageProduct.getImageId());
+            imageProductRequest.setId(imageProduct.getId());
+            imageProductRequests.add(imageProductRequest);
+        }
+        return imageProductRequests;
     }
 }
