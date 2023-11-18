@@ -20,6 +20,8 @@ public class CartController {
 
     @PostMapping("/add")
     public ResponseEntity<?>addCart(@RequestBody CartRequest cartRequest){
+
+        System.out.println("cart rq nè "+ cartRequest);
         Cart cart = cartService.addCart(cartRequest);
         if(cart == null){
             return ResponseEntity.badRequest().body(new MessageError(400, "create cart failed"));
