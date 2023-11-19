@@ -46,6 +46,4 @@ public class PropertiesController {
     public List<Properties> getProperties(){
         return propertiesService.getProperties();
     }
-
-
 }

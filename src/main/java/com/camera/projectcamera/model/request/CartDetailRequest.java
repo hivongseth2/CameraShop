@@ -13,4 +13,5 @@ public class CartDetailRequest {
     private Long CartId;
     private Long CartDetailId;
     private Long productId;
+    private String productName;
 }

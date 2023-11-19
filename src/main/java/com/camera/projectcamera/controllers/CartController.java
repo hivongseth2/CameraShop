@@ -72,13 +72,18 @@ public class CartController {
             if (cart != null) {
                 List<CartItem> cartItems = cart.getCartItems();
                 List<CartDetailRequest> cartDetailResponses = cartItems.stream()
-                        .map(cartItem -> new CartDetailRequest(
-                                cartItem.getPrice(),
-                                cartItem.getQuantity(),
-                                cartItem.getCart().getCartId(),  // Fix: Corrected the syntax here
-                                cartItem.getCartItemId(),     // Fix: Assuming you have a method getCartDetailId in CartItem
-                                cartItem.getProduct().getProductId() // Fix: Assuming you have a method getProductId in Product
-                        ))
+                        .map(cartItem -> {
+                            String productName = cartItem.getProduct().getName(); // Fetch the product name
+
+                            return new CartDetailRequest(
+                                    cartItem.getPrice(),
+                                    cartItem.getQuantity(),
+                                    cartItem.getCart().getCartId(),
+                                    cartItem.getCartItemId(),
+                                    cartItem.getProduct().getProductId(),
+                                    productName
+                            );
+                        })
                         .collect(Collectors.toList());
 
                 return ResponseEntity.ok(cartDetailResponses);
@@ -92,5 +97,6 @@ public class CartController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
 
 }

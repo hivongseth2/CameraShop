@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -69,6 +70,12 @@ public class ProductController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/productsByCustomerId")
+    public ResponseEntity<Map<String, Integer>> getProductDetailsByCustomerId(@RequestParam("personId") Long personId) {
+        Map<String, Integer> productDetails = productService.getProductDetailsByCustomerId(personId);
+        return ResponseEntity.ok(productDetails);
     }
 
 }
