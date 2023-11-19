@@ -3,6 +3,7 @@ package com.camera.projectcamera.service.impl;
 import com.camera.projectcamera.entity.Accounts;
 import com.camera.projectcamera.entity.Customer;
 import com.camera.projectcamera.entity.Role;
+import com.camera.projectcamera.model.request.AccountRequest;
 import com.camera.projectcamera.model.request.CustomerRequest;
 import com.camera.projectcamera.repository.AccountRepository;
 import com.camera.projectcamera.repository.CustomerRepository;
@@ -78,22 +79,33 @@ public class CustomerServiceImp implements CustomerService {
     @Override
     public Customer updateCustomer(Long customerId, Customer customer) {
         Optional<Customer> optionalCustomer = customerRepo.findById(customerId);
-
-
         if (optionalCustomer.isPresent()) {
             Customer customerBefore = optionalCustomer.get();
-
             customer.setAccount(customerBefore.getAccount());
             customer.setPersonId(customerBefore.getPersonId());
+            updateUsernamePasswordAccount(customerBefore.getAccount().getUserId(), new AccountRequest(
+                    customer.getAccount().getUserName(),
+                    customer.getAccount().getPassword()
+            ));
 
-
+            // Save the updated customer
             return customerRepo.save(customer);
         } else {
-            // Role with the given ID not found
             return null;
         }
+    }
 
+    public void updateUsernamePasswordAccount(Long accountId, AccountRequest accountRequest) {
+        Accounts accounts = accountRepository.findById(accountId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Account with id " + accountId + " not found"));
 
+        // Update username and password
+        accounts.setUserName(accountRequest.getUserName());
+        accounts.setPassword(accountRequest.getPassword());
+
+        // Save the updated account
+        accountRepository.save(accounts);
     }
 
     @Override

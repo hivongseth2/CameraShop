@@ -28,7 +28,6 @@ public class RoleController {
 
         return ResponseEntity.ok(role);
     }
-
     @GetMapping("/get")
     public Role getRole(@RequestParam Long roleId)
     {
@@ -37,14 +36,10 @@ public class RoleController {
     @PutMapping("/update/{roleId}")
     public ResponseEntity<?> updateRole(@PathVariable Long roleId,@RequestBody RoleRequest request) {
         Role role = roleService.updateRole(roleId,request.getRoleName());
-
         if(role==null){
             return ResponseEntity.badRequest().body(new MessageError(400, "Create role error"));
         }
-
         return ResponseEntity.ok(role);
-
-
     }
 
 }
