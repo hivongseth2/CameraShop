@@ -5,6 +5,8 @@ import com.camera.projectcamera.model.request.ProductRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public interface ProductService {
     Products addProduct(Products products);
@@ -16,4 +18,6 @@ public interface ProductService {
     void updateProudct(Long productId, Products products);
 
     void updateProductStatus(Long productId, int status);
+
+    Products getProductById(Long productId);
 }

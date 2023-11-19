@@ -19,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -215,4 +216,9 @@ public class ProductServiceImpl implements ProductService {
         }
         return imageProductRequests;
     }
+    public Products getProductById(Long productId) {
+        Optional<Products> productOptional = productRepository.findById(productId);
+        return productOptional.orElse(null);
+    }
+
 }

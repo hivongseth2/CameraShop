@@ -30,6 +30,7 @@ public class CartServiceImpl implements CartService {
     private final ProductRepository productRepository;
     @Override
     public Cart addCart(CartRequest cartRequest) {
+
         Cart cart = new Cart();
         try {
             Customer customer = new Customer();
@@ -76,8 +77,15 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart updateCart(CartRequest cartRequest) {
+        System.out.println("day la cart request"+cartRequest);
         try {
+            // Retrieve the existing cart based on the given cartId
+
             Long cartIdTemp = cartRepository.findCartIdByCustomerId(cartRequest.getCustomerId());
+
+            System.out.println("this-------------------------------------"+cartRequest.getCustomerId());
+
+
             Optional<Cart> existingCartOptional = cartRepository.findById(cartIdTemp);
             if (existingCartOptional.isPresent()) {
                 Cart existingCart = existingCartOptional.get();
@@ -141,9 +149,9 @@ public class CartServiceImpl implements CartService {
             return null;
         }
     }
-
     @Override
-    public Cart addOrUpdateCart(CartRequest cartRequest) {
-        return null;
+    public Cart getCartByCustomerId(Long customerId) {
+        Long id = cartRepository.findCartIdByCustomerId(customerId);
+        return getCartById(id);
     }
 }
