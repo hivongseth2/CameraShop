@@ -11,6 +11,7 @@ import com.camera.projectcamera.service.CustomerService;
 import com.camera.projectcamera.service.OrderDetailService;
 import com.camera.projectcamera.service.OrderService;
 import com.camera.projectcamera.service.ProductService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -149,5 +150,21 @@ public class OrderServiceImpl implements OrderService {
                 .collect(Collectors.toList());
 
         return orderResponses;
+    }
+    @Transactional
+    public boolean updateOrderStatus(Long orderId, String newStatus) {
+        Optional<Order> optionalOrder = orderRepository.findById(orderId);
+
+        if (optionalOrder.isPresent()) {
+            Order order = optionalOrder.get();
+            order.setStatus(newStatus); // Đặt trạng thái mới cho đối tượng Order
+
+            // Lưu thay đổi vào cơ sở dữ liệu
+            orderRepository.save(order);
+
+            return true; // Trạng thái order đã được cập nhật thành công
+        }
+
+        return false; // Không tìm thấy order với orderId tương ứng
     }
 }
