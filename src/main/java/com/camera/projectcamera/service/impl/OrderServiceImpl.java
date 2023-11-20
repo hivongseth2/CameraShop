@@ -94,6 +94,17 @@ public class OrderServiceImpl implements OrderService {
         return order;
     }
 
+    @Override
+    public Order getOrderByCustomerId(Long customerId) {
+        Long orderId = orderRepository.findOrderIdByCustomerId(customerId);
+
+        if (orderId != null) {
+            return orderRepository.findById(orderId).orElse(null);
+        } else {
+            return null;
+        }
+    }
+
 
 
 }

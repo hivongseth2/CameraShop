@@ -105,7 +105,9 @@ public class CartController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-
-
+    @DeleteMapping("/cartItem/{cartDetailId}")
+    public ResponseEntity<String> deleteCartItem(@PathVariable Long cartDetailId) {
+        cartDetailService.deleteCartItemById(cartDetailId);
+        return new ResponseEntity<>("CartItem deleted successfully", HttpStatus.OK);
+    }
 }
