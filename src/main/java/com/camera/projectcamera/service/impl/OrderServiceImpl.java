@@ -1,7 +1,9 @@
 package com.camera.projectcamera.service.impl;
 
 import com.camera.projectcamera.entity.*;
+import com.camera.projectcamera.model.request.OrderDetailRequest;
 import com.camera.projectcamera.model.request.OrderRequest;
+import com.camera.projectcamera.model.request.OrderResponse;
 import com.camera.projectcamera.repository.OrderDetailRepository;
 import com.camera.projectcamera.repository.OrderRepository;
 import com.camera.projectcamera.repository.ProductRepository;
@@ -17,7 +19,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -98,31 +102,52 @@ public class OrderServiceImpl implements OrderService {
     public Order getOrderByCustomerId(Long customerId) {
         return null;
     }
-
     @Override
-    public OrderRequest getOrderCustomerId(Long customerId) {
-        Long orderId = orderRepository.findOrderIdByCustomerId(customerId);
-        if (orderId != null) {
-            Order order = orderRepository.findById(orderId).orElse(null);
-            if (order != null) {
-                OrderRequest orderRequest = new OrderRequest();
-                orderRequest.setCustomerId(order.getCustomer().getPersonId());
-                orderRequest.setOrderDate(order.getOrderDate());
-                orderRequest.setOrderId(order.getOrderId());
-                orderRequest.setShipDate(order.getShippedDate());
-                orderRequest.setAddress(order.getAddress());
+    public List<OrderResponse> getOrdersByCustomerId(Long customerId) {
+        List<Order> orders = orderRepository.findByCustomer_PersonId(customerId);
 
-                // Tạo danh sách OrderDetails
-                HashMap<Long, Integer> orderDetailsMap = new HashMap<>();
-                List<OrderDetail> orderDetails = order.getOrderDetails();
-                for (OrderDetail orderDetail : orderDetails) {
-                    orderDetailsMap.put(orderDetail.getProduct().getProductId(), orderDetail.getQuantity());
-                }
-                orderRequest.setOrderDetails(orderDetailsMap);
+        List<OrderResponse> orderResponses = orders.stream()
+                .map(order -> {
+                    List<OrderDetailRequest> orderDetails = order.getOrderDetails().stream()
+                            .map(orderDetail -> {
+                                Products product = orderDetail.getProduct();
+                                List<String> productImages = product.getImages().stream()
+                                        .map(Images::getId)
+                                        .collect(Collectors.toList());
 
-                return orderRequest;
-            }
-        }
-        return null;
+                                return new OrderDetailRequest(
+                                        orderDetail.getPrice(),
+                                        orderDetail.getQuantity(),
+                                        orderDetail.getOrderDetailId(),
+                                        orderDetail.getOrder().getOrderId(),
+                                        product.getProductId(),
+                                        product.getName(),
+                                        productImages,
+                                        order.getOrderDate(),
+                                        order.getShippedDate(),
+                                        order.getAddress()
+                                );
+                            })
+                            .collect(Collectors.toList());
+
+                    Customer customer = order.getCustomer();
+
+                    return new OrderResponse(
+                            order.getOrderId(),
+                            orderDetails,
+                            order.getOrderDate(),
+                            order.getShippedDate(),
+                            order.getAddress(),
+                            customer.getPersonId(),
+                            customer.getFirstName(),
+                            customer.getLastName(),
+                            customer.getStreet(),
+                            customer.getPhone(),
+                            order.getStatus()
+                    );
+                })
+                .collect(Collectors.toList());
+
+        return orderResponses;
     }
 }

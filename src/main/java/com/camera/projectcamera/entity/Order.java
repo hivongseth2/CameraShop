@@ -21,6 +21,7 @@ public class Order {
     private Date orderDate;
     private Date shippedDate;
     private String address;
+    private String status;
 
 
     @ManyToOne
@@ -29,7 +30,4 @@ public class Order {
 
     @OneToMany(mappedBy="order")
     private List<OrderDetail> orderDetails;
-
-
-
 }

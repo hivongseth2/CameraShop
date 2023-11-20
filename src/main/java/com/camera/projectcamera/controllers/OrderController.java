@@ -4,6 +4,7 @@ import com.camera.projectcamera.entity.*;
 import com.camera.projectcamera.model.MessageError;
 import com.camera.projectcamera.model.request.OrderDetailRequest;
 import com.camera.projectcamera.model.request.OrderRequest;
+import com.camera.projectcamera.model.request.OrderResponse;
 import com.camera.projectcamera.model.request.StaffRequest;
 import com.camera.projectcamera.service.OrderDetailService;
 import com.camera.projectcamera.service.OrderService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -87,15 +89,16 @@ public class OrderController {
         }
     }
 
-    @GetMapping("/getOrderByCustomerId")
-    public ResponseEntity<OrderRequest> getOrderByCustomerId(@RequestParam Long customerId) {
-        OrderRequest orderRequest = orderService.getOrderCustomerId(customerId);
+    @GetMapping("/getOrdersByCustomerId")
+    public ResponseEntity<List<OrderResponse>> getOrdersByCustomerId(@RequestParam Long customerId) {
+        List<OrderResponse> orderResponses = orderService.getOrdersByCustomerId(customerId);
 
-        if (orderRequest != null) {
-            return ResponseEntity.ok(orderRequest);
+        if (!orderResponses.isEmpty()) {
+            return ResponseEntity.ok(orderResponses);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
+
 
 }
