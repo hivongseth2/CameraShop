@@ -3,12 +3,15 @@ package com.camera.projectcamera.controllers;
 
 import com.camera.projectcamera.entity.Cart;
 import com.camera.projectcamera.entity.CartItem;
+import com.camera.projectcamera.entity.Images;
+import com.camera.projectcamera.entity.Products;
 import com.camera.projectcamera.model.MessageError;
 import com.camera.projectcamera.model.request.CartDetailRequest;
 import com.camera.projectcamera.model.request.CartRequest;
 import com.camera.projectcamera.model.request.UpdateCartRequest;
 import com.camera.projectcamera.service.CartDetailService;
 import com.camera.projectcamera.service.CartService;
+import com.camera.projectcamera.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.sql.Update;
 import org.springframework.http.HttpStatus;
@@ -24,6 +27,7 @@ import java.util.stream.Collectors;
 public class CartController {
     private final CartService cartService;
     private final CartDetailService cartDetailService;
+    private final ProductService productService;
 
     @PostMapping("/add")
     public ResponseEntity<?>addCart(@RequestBody CartRequest cartRequest){
@@ -73,7 +77,10 @@ public class CartController {
                 List<CartItem> cartItems = cart.getCartItems();
                 List<CartDetailRequest> cartDetailResponses = cartItems.stream()
                         .map(cartItem -> {
-                            String productName = cartItem.getProduct().getName(); // Fetch the product name
+                            Products product = productService.getProductById(cartItem.getProduct().getProductId());
+                            List<String> productImages = product.getImages().stream()
+                                    .map(Images::getId)
+                                    .collect(Collectors.toList());
 
                             return new CartDetailRequest(
                                     cartItem.getPrice(),
@@ -81,7 +88,8 @@ public class CartController {
                                     cartItem.getCart().getCartId(),
                                     cartItem.getCartItemId(),
                                     cartItem.getProduct().getProductId(),
-                                    productName
+                                    cartItem.getProduct().getName(),
+                                    productImages
                             );
                         })
                         .collect(Collectors.toList());
@@ -97,6 +105,7 @@ public class CartController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
 
 
 }
