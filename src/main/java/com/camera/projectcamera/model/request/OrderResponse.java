@@ -10,15 +10,17 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderDetailRequest {
-    private double price;
-    private int quantity;
-    private Long orderDetailId;
+public class OrderResponse {
     private Long orderId;
-    private Long productId;
-    private String productName;
-    private List<String> productImages;
+    private List<OrderDetailRequest> orderDetails;
     private Date orderDate;
     private Date shippedDate;
     private String address;
+    private Long customerId;
+    private String firstName;
+    private String lastName;
+    private String customerAddress;
+    private String customerPhoneNumber;
+    private String status;
 }
+
