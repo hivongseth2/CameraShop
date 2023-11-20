@@ -11,6 +11,7 @@ import com.camera.projectcamera.repository.ProductRepository;
 import com.camera.projectcamera.service.BrandService;
 import com.camera.projectcamera.service.CartService;
 import com.camera.projectcamera.service.CategoriesService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -79,4 +80,11 @@ public class CartDetailService implements com.camera.projectcamera.service.CartD
         }
         return Collections.emptyList();
     }
+
+    @Override
+    @Transactional
+    public void deleteCartItemById(Long cartDetailId) {
+        cartDetailRepository.deleteByCartItemId(cartDetailId);
+    }
+
 }

@@ -11,4 +11,6 @@ public interface CartDetailService{
     CartItem addCartWithQuantity(UpdateCartRequest updateCartRequest);
 
     List<CartItem> getCartItemsByCustomerId(Long customerId);
+
+    void deleteCartItemById(Long cartDetailId);
 }
