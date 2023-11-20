@@ -39,6 +39,9 @@ public class CustomerController {
 
     @GetMapping("/getById")
     public Customer getCustomer(@RequestParam Long personId) {
+
+
+
         return customerService.getCustomerById(personId);
     }
     @PutMapping("/update/{customerId}")
