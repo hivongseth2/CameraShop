@@ -100,5 +100,14 @@ public class OrderController {
         }
     }
 
+    @PutMapping("/updateStatus/{orderId}")
+    public ResponseEntity<String> updateOrderStatus(@PathVariable Long orderId, @RequestBody String newStatus) {
+        boolean updated = orderService.updateOrderStatus(orderId, newStatus);
 
+        if (updated) {
+            return ResponseEntity.ok("Order status updated successfully.");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
