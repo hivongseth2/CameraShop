@@ -71,11 +71,4 @@ public class ProductController {
             return ResponseEntity.notFound().build();
         }
     }
-
-    @GetMapping("/productsByCustomerId")
-    public ResponseEntity<Map<String, Integer>> getProductDetailsByCustomerId(@RequestParam("personId") Long personId) {
-        Map<String, Integer> productDetails = productService.getProductDetailsByCustomerId(personId);
-        return ResponseEntity.ok(productDetails);
-    }
-
 }

@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,4 +16,5 @@ public class CartDetailRequest {
     private Long CartDetailId;
     private Long productId;
     private String productName;
+    private List<String> productImages;
 }
