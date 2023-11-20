@@ -13,4 +13,5 @@ public interface OrderService {
     Order getOrderById(Long orderId);
 
     Order getOrderByCustomerId(Long customerId);
+    OrderRequest getOrderCustomerId(Long customerId);
 }

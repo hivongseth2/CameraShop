@@ -69,7 +69,10 @@ public class OrderController {
                                     orderDetail.getOrderDetailId(),
                                     orderDetail.getProduct().getProductId(),
                                     orderDetail.getProduct().getName(),
-                                    productImages
+                                    productImages,
+                                    order.getOrderDate(),
+                                    order.getShippedDate(),
+                                    order.getAddress()
                             );
                         })
                         .collect(Collectors.toList());
@@ -84,5 +87,15 @@ public class OrderController {
         }
     }
 
+    @GetMapping("/getOrderByCustomerId")
+    public ResponseEntity<OrderRequest> getOrderByCustomerId(@RequestParam Long customerId) {
+        OrderRequest orderRequest = orderService.getOrderCustomerId(customerId);
+
+        if (orderRequest != null) {
+            return ResponseEntity.ok(orderRequest);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }

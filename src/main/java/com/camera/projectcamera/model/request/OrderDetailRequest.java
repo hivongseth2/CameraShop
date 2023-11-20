@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -17,4 +18,7 @@ public class OrderDetailRequest {
     private Long productId;
     private String productName;
     private List<String> productImages;
+    private Date orderDate;
+    private Date shippedDate;
+    private String address;
 }

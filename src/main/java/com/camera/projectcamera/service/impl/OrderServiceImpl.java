@@ -96,15 +96,33 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order getOrderByCustomerId(Long customerId) {
-        Long orderId = orderRepository.findOrderIdByCustomerId(customerId);
-
-        if (orderId != null) {
-            return orderRepository.findById(orderId).orElse(null);
-        } else {
-            return null;
-        }
+        return null;
     }
 
+    @Override
+    public OrderRequest getOrderCustomerId(Long customerId) {
+        Long orderId = orderRepository.findOrderIdByCustomerId(customerId);
+        if (orderId != null) {
+            Order order = orderRepository.findById(orderId).orElse(null);
+            if (order != null) {
+                OrderRequest orderRequest = new OrderRequest();
+                orderRequest.setCustomerId(order.getCustomer().getPersonId());
+                orderRequest.setOrderDate(order.getOrderDate());
+                orderRequest.setOrderId(order.getOrderId());
+                orderRequest.setShipDate(order.getShippedDate());
+                orderRequest.setAddress(order.getAddress());
 
+                // Tạo danh sách OrderDetails
+                HashMap<Long, Integer> orderDetailsMap = new HashMap<>();
+                List<OrderDetail> orderDetails = order.getOrderDetails();
+                for (OrderDetail orderDetail : orderDetails) {
+                    orderDetailsMap.put(orderDetail.getProduct().getProductId(), orderDetail.getQuantity());
+                }
+                orderRequest.setOrderDetails(orderDetailsMap);
 
+                return orderRequest;
+            }
+        }
+        return null;
+    }
 }
