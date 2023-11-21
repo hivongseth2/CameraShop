@@ -19,6 +19,7 @@ public class OrderRequest {
     private Long orderId;
     private Date shipDate;
     private String address;
+    private String status;
     private HashMap<Long , Integer> OrderDetails;
 
 }

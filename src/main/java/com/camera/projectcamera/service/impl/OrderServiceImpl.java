@@ -49,6 +49,7 @@ public class OrderServiceImpl implements OrderService {
             }
             order.setOrderDate(orderRequest.getOrderDate());
             order.setCustomer(customer);
+            order.setStatus(orderRequest.getStatus());
             order.setShippedDate(orderRequest.getShipDate());
             order.setAddress(orderRequest.getAddress());
             System.out.println(customer);
